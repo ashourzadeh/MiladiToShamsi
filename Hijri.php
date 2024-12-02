@@ -40,7 +40,12 @@ class Hijri {
         $y = floor($jd / 365.24219);
         $jd = $jd - floor($y * 365.24219);
         $m = floor(($jd + 0.5) / 30.61);
+        $daying = floor($jd + 0.5) - floor($m * 30.61);
+        if($m == 9 && $daying <= 9){
+        $d = floor($jd + 0.5) - floor($m * 30.61) + 1;
+        }else{
         $d = floor($jd + 0.5) - floor($m * 30.61);
+        }
         return array($y + 1379, $m, $d);
     }
 
@@ -55,6 +60,11 @@ class Hijri {
         $jd = jdfromdate($year, $month, $day);
         $shamsiDate = $this->jdToShamsi($jd);
 
+        // Check if the month is between 7 (Tir) and 12 (Esfand)
+        if ($shamsiDate[1] >= 7 && $shamsiDate[2] <= 9) {
+            $shamsiDate[2] += 1; // Add one day
+        }
+
         $this->shamsiDate = array(
             'year' => $shamsiDate[0],
             'month' => $shamsiDate[1],
@@ -68,15 +78,16 @@ class Hijri {
 
 }
 
-    function getMiladitoShamsi($datemiladi) {
-            $gregorianDate = $datemiladi;
-            $a = date('Y-m-d', strtotime($gregorianDate)); 
-            $hijri = new Hijri($a);
-            $hijriDate = $hijri->getHijriDate();
-            $formattedHijriDate = sprintf('%d/%d/%d', $hijriDate['year'], $hijriDate['month'], $hijriDate['day']);
-            return $formattedHijriDate;
-    }
+function getMiladitoShamsi($datemiladi) {
+    $gregorianDate = $datemiladi;
+    $a = date('Y-m-d', strtotime($gregorianDate)); 
+    $hijri = new Hijri($a);
+    $hijriDate = $hijri->getHijriDate();
+    $formattedHijriDate = sprintf('%d/%d/%d', $hijriDate['year'], $hijriDate['month'], $hijriDate['day']);
+    return $formattedHijriDate;
+}
 ?>
+
 
 
 
