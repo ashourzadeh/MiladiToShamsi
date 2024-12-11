@@ -19,7 +19,9 @@ class Hijri {
         $timestamp = mktime(0, 0, 0, $month, $day, $year);
         $jd = $this->gregorianToJD($year, $month, $day);
         $hijriDate = $this->jdToHijri($jd);
-
+if($jd == 8){
+    $jd +=1;
+}
         $this->hijriDate = array(
             'year' => $hijriDate[0],
             'month' => $hijriDate[1],
