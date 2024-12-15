@@ -41,6 +41,7 @@ class Hijri {
         $jd = $jd - floor($y * 365.24219);
         $m = floor(($jd + 0.5) / 30.61);
         $daying = floor($jd + 0.5) - floor($m * 30.61);
+        //for aban
         if($m == 9 && $daying <= 9){
         $d = floor($jd + 0.5) - floor($m * 30.61) + 1;
         }else{
